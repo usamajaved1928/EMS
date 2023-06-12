@@ -29,7 +29,7 @@ namespace EMS_Project
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.title = new System.Windows.Forms.Label();
             this.BtnDashKbaIRAC = new System.Windows.Forms.Button();
             this.btnDashKbaMachine = new System.Windows.Forms.Button();
             this.btnDashKomoriL528 = new System.Windows.Forms.Button();
@@ -40,18 +40,18 @@ namespace EMS_Project
             this.btnDashSM1028 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // title
             // 
-            this.label1.BackColor = System.Drawing.Color.RoyalBlue;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Font = new System.Drawing.Font("Arial", 16F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(800, 44);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "EMS Dashboard";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.title.BackColor = System.Drawing.Color.RoyalBlue;
+            this.title.Dock = System.Windows.Forms.DockStyle.Top;
+            this.title.Font = new System.Drawing.Font("Arial", 16F);
+            this.title.ForeColor = System.Drawing.Color.White;
+            this.title.Location = new System.Drawing.Point(0, 0);
+            this.title.Name = "title";
+            this.title.Size = new System.Drawing.Size(800, 44);
+            this.title.TabIndex = 1;
+            this.title.Text = "EMS Dashboard";
+            this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BtnDashKbaIRAC
             // 
@@ -60,8 +60,10 @@ namespace EMS_Project
             this.BtnDashKbaIRAC.Name = "BtnDashKbaIRAC";
             this.BtnDashKbaIRAC.Size = new System.Drawing.Size(143, 34);
             this.BtnDashKbaIRAC.TabIndex = 2;
+            this.BtnDashKbaIRAC.Tag = "KBA IR-AC";
             this.BtnDashKbaIRAC.Text = "KBA IR-AC";
             this.BtnDashKbaIRAC.UseVisualStyleBackColor = true;
+            this.BtnDashKbaIRAC.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashKbaMachine
             // 
@@ -70,8 +72,10 @@ namespace EMS_Project
             this.btnDashKbaMachine.Name = "btnDashKbaMachine";
             this.btnDashKbaMachine.Size = new System.Drawing.Size(143, 34);
             this.btnDashKbaMachine.TabIndex = 3;
+            this.btnDashKbaMachine.Tag = "KBA Machine";
             this.btnDashKbaMachine.Text = "KBA Machine";
             this.btnDashKbaMachine.UseVisualStyleBackColor = true;
+            this.btnDashKbaMachine.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashKomoriL528
             // 
@@ -80,8 +84,10 @@ namespace EMS_Project
             this.btnDashKomoriL528.Name = "btnDashKomoriL528";
             this.btnDashKomoriL528.Size = new System.Drawing.Size(143, 34);
             this.btnDashKomoriL528.TabIndex = 4;
+            this.btnDashKomoriL528.Tag = "Komori L528";
             this.btnDashKomoriL528.Text = "Komori L528";
             this.btnDashKomoriL528.UseVisualStyleBackColor = true;
+            this.btnDashKomoriL528.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashSM102
             // 
@@ -90,8 +96,10 @@ namespace EMS_Project
             this.btnDashSM102.Name = "btnDashSM102";
             this.btnDashSM102.Size = new System.Drawing.Size(143, 34);
             this.btnDashSM102.TabIndex = 7;
+            this.btnDashSM102.Tag = "SM 102";
             this.btnDashSM102.Text = "SM 102";
             this.btnDashSM102.UseVisualStyleBackColor = true;
+            this.btnDashSM102.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashPaperBag
             // 
@@ -100,8 +108,10 @@ namespace EMS_Project
             this.btnDashPaperBag.Name = "btnDashPaperBag";
             this.btnDashPaperBag.Size = new System.Drawing.Size(143, 34);
             this.btnDashPaperBag.TabIndex = 6;
+            this.btnDashPaperBag.Tag = "Paper Bag";
             this.btnDashPaperBag.Text = "Paper Bag";
             this.btnDashPaperBag.UseVisualStyleBackColor = true;
+            this.btnDashPaperBag.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashKomoriL528AC
             // 
@@ -110,8 +120,10 @@ namespace EMS_Project
             this.btnDashKomoriL528AC.Name = "btnDashKomoriL528AC";
             this.btnDashKomoriL528AC.Size = new System.Drawing.Size(143, 34);
             this.btnDashKomoriL528AC.TabIndex = 5;
+            this.btnDashKomoriL528AC.Tag = "Komori L528 AC";
             this.btnDashKomoriL528AC.Text = "Komori L528 AC";
             this.btnDashKomoriL528AC.UseVisualStyleBackColor = true;
+            this.btnDashKomoriL528AC.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashSM1028AC
             // 
@@ -120,8 +132,10 @@ namespace EMS_Project
             this.btnDashSM1028AC.Name = "btnDashSM1028AC";
             this.btnDashSM1028AC.Size = new System.Drawing.Size(143, 34);
             this.btnDashSM1028AC.TabIndex = 9;
+            this.btnDashSM1028AC.Tag = "SM 102.8 AC";
             this.btnDashSM1028AC.Text = "SM 102.8 AC";
             this.btnDashSM1028AC.UseVisualStyleBackColor = true;
+            this.btnDashSM1028AC.Click += new System.EventHandler(this.report_window);
             // 
             // btnDashSM1028
             // 
@@ -130,8 +144,10 @@ namespace EMS_Project
             this.btnDashSM1028.Name = "btnDashSM1028";
             this.btnDashSM1028.Size = new System.Drawing.Size(143, 34);
             this.btnDashSM1028.TabIndex = 8;
+            this.btnDashSM1028.Tag = "SM 102.8";
             this.btnDashSM1028.Text = "SM 102.8";
             this.btnDashSM1028.UseVisualStyleBackColor = true;
+            this.btnDashSM1028.Click += new System.EventHandler(this.report_window);
             // 
             // mainScreen
             // 
@@ -146,7 +162,7 @@ namespace EMS_Project
             this.Controls.Add(this.btnDashKomoriL528);
             this.Controls.Add(this.btnDashKbaMachine);
             this.Controls.Add(this.BtnDashKbaIRAC);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.title);
             this.Name = "mainScreen";
             this.Text = "Dashboard";
             this.ResumeLayout(false);
@@ -155,7 +171,7 @@ namespace EMS_Project
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label title;
         private System.Windows.Forms.Button BtnDashKbaIRAC;
         private System.Windows.Forms.Button btnDashKbaMachine;
         private System.Windows.Forms.Button btnDashKomoriL528;
