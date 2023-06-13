@@ -35,12 +35,12 @@ namespace EMS_Project
             this.dataReport = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dateReportsStartDate = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbReportsFormat = new System.Windows.Forms.ComboBox();
             this.btnReportsFindData = new System.Windows.Forms.Button();
+            this.cmbReportsFormat = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateReportsStartDate = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataReport)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -94,6 +94,7 @@ namespace EMS_Project
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 12F);
             this.label1.Location = new System.Drawing.Point(117, 45);
@@ -117,50 +118,20 @@ namespace EMS_Project
             this.panel1.Size = new System.Drawing.Size(255, 406);
             this.panel1.TabIndex = 5;
             // 
-            // dateReportsStartDate
+            // btnReportsFindData
             // 
-            this.dateReportsStartDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateReportsStartDate.CalendarFont = new System.Drawing.Font("Arial", 12F);
-            this.dateReportsStartDate.Font = new System.Drawing.Font("Arial", 12F);
-            this.dateReportsStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateReportsStartDate.Location = new System.Drawing.Point(144, 39);
-            this.dateReportsStartDate.Name = "dateReportsStartDate";
-            this.dateReportsStartDate.Size = new System.Drawing.Size(104, 26);
-            this.dateReportsStartDate.TabIndex = 5;
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Arial", 12F);
-            this.dateTimePicker1.Font = new System.Drawing.Font("Arial", 12F);
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(7, 39);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(104, 26);
-            this.dateTimePicker1.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 12F);
-            this.label2.Location = new System.Drawing.Point(7, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 18);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Select Date";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 12F);
-            this.label3.Location = new System.Drawing.Point(7, 86);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(106, 18);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Select Format";
+            this.btnReportsFindData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReportsFindData.Font = new System.Drawing.Font("Arial", 12F);
+            this.btnReportsFindData.Location = new System.Drawing.Point(7, 152);
+            this.btnReportsFindData.Name = "btnReportsFindData";
+            this.btnReportsFindData.Size = new System.Drawing.Size(241, 28);
+            this.btnReportsFindData.TabIndex = 3;
+            this.btnReportsFindData.Text = "Find Data";
+            this.btnReportsFindData.UseVisualStyleBackColor = true;
             // 
             // cmbReportsFormat
             // 
+            this.cmbReportsFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbReportsFormat.Font = new System.Drawing.Font("Arial", 12F);
             this.cmbReportsFormat.FormattingEnabled = true;
             this.cmbReportsFormat.Items.AddRange(new object[] {
@@ -173,18 +144,49 @@ namespace EMS_Project
             this.cmbReportsFormat.Location = new System.Drawing.Point(7, 107);
             this.cmbReportsFormat.Name = "cmbReportsFormat";
             this.cmbReportsFormat.Size = new System.Drawing.Size(241, 26);
-            this.cmbReportsFormat.TabIndex = 9;
+            this.cmbReportsFormat.TabIndex = 2;
             // 
-            // btnReportsFindData
+            // label3
             // 
-            this.btnReportsFindData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReportsFindData.Font = new System.Drawing.Font("Arial", 12F);
-            this.btnReportsFindData.Location = new System.Drawing.Point(7, 152);
-            this.btnReportsFindData.Name = "btnReportsFindData";
-            this.btnReportsFindData.Size = new System.Drawing.Size(241, 28);
-            this.btnReportsFindData.TabIndex = 6;
-            this.btnReportsFindData.Text = "Find Data";
-            this.btnReportsFindData.UseVisualStyleBackColor = true;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial", 12F);
+            this.label3.Location = new System.Drawing.Point(7, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(106, 18);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Select Format";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 12F);
+            this.label2.Location = new System.Drawing.Point(7, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 18);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Select Date";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Arial", 12F);
+            this.dateTimePicker1.Font = new System.Drawing.Font("Arial", 12F);
+            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker1.Location = new System.Drawing.Point(7, 39);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(104, 26);
+            this.dateTimePicker1.TabIndex = 0;
+            // 
+            // dateReportsStartDate
+            // 
+            this.dateReportsStartDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateReportsStartDate.CalendarFont = new System.Drawing.Font("Arial", 12F);
+            this.dateReportsStartDate.Font = new System.Drawing.Font("Arial", 12F);
+            this.dateReportsStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateReportsStartDate.Location = new System.Drawing.Point(144, 39);
+            this.dateReportsStartDate.Name = "dateReportsStartDate";
+            this.dateReportsStartDate.Size = new System.Drawing.Size(104, 26);
+            this.dateReportsStartDate.TabIndex = 1;
             // 
             // Reports
             // 
