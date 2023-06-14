@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace EMS_Project
 {
@@ -24,7 +17,7 @@ namespace EMS_Project
         {
             Button button = (Button)sender;
             string tableName = (string)button.Tag;
-            th = new Thread(()=> { openReports(tableName); });
+            th = new Thread(() => { openReports(tableName); });
             th.SetApartmentState(ApartmentState.STA);
             th.Start();
             this.Close();

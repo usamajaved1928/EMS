@@ -32,16 +32,21 @@ namespace EMS_Project
             this.btnReportsClose = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.title = new System.Windows.Forms.Label();
-            this.dataReport = new System.Windows.Forms.DataGridView();
+            this.dataReportTable = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnReportsFindData = new System.Windows.Forms.Button();
             this.cmbReportsFormat = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dateReportsStartDate = new System.Windows.Forms.DateTimePicker();
-            ((System.ComponentModel.ISupportInitialize)(this.dataReport)).BeginInit();
+            this.dateReportsEndDate = new System.Windows.Forms.DateTimePicker();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quality = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +72,7 @@ namespace EMS_Project
             this.button2.TabIndex = 1;
             this.button2.Text = "Print";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.PrintData);
             // 
             // title
             // 
@@ -80,17 +86,25 @@ namespace EMS_Project
             this.title.TabIndex = 2;
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // dataReport
+            // dataReportTable
             // 
-            this.dataReport.AllowUserToAddRows = false;
-            this.dataReport.AllowUserToDeleteRows = false;
-            this.dataReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataReport.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataReport.Location = new System.Drawing.Point(0, 44);
-            this.dataReport.Name = "dataReport";
-            this.dataReport.ReadOnly = true;
-            this.dataReport.Size = new System.Drawing.Size(543, 406);
-            this.dataReport.TabIndex = 3;
+            this.dataReportTable.AllowUserToAddRows = false;
+            this.dataReportTable.AllowUserToDeleteRows = false;
+            this.dataReportTable.AllowUserToResizeColumns = false;
+            this.dataReportTable.AllowUserToResizeRows = false;
+            this.dataReportTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataReportTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.name,
+            this.value,
+            this.timestamp,
+            this.quality});
+            this.dataReportTable.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dataReportTable.Location = new System.Drawing.Point(0, 44);
+            this.dataReportTable.Name = "dataReportTable";
+            this.dataReportTable.ReadOnly = true;
+            this.dataReportTable.Size = new System.Drawing.Size(543, 406);
+            this.dataReportTable.TabIndex = 3;
             // 
             // label1
             // 
@@ -109,8 +123,8 @@ namespace EMS_Project
             this.panel1.Controls.Add(this.cmbReportsFormat);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.dateTimePicker1);
             this.panel1.Controls.Add(this.dateReportsStartDate);
+            this.panel1.Controls.Add(this.dateReportsEndDate);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Location = new System.Drawing.Point(542, 44);
@@ -128,6 +142,7 @@ namespace EMS_Project
             this.btnReportsFindData.TabIndex = 3;
             this.btnReportsFindData.Text = "Find Data";
             this.btnReportsFindData.UseVisualStyleBackColor = true;
+            this.btnReportsFindData.Click += new System.EventHandler(this.GetData);
             // 
             // cmbReportsFormat
             // 
@@ -166,27 +181,67 @@ namespace EMS_Project
             this.label2.TabIndex = 7;
             this.label2.Text = "Select Date";
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Arial", 12F);
-            this.dateTimePicker1.Font = new System.Drawing.Font("Arial", 12F);
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(7, 39);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(104, 26);
-            this.dateTimePicker1.TabIndex = 0;
-            // 
             // dateReportsStartDate
             // 
             this.dateReportsStartDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dateReportsStartDate.CalendarFont = new System.Drawing.Font("Arial", 12F);
             this.dateReportsStartDate.Font = new System.Drawing.Font("Arial", 12F);
             this.dateReportsStartDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateReportsStartDate.Location = new System.Drawing.Point(144, 39);
+            this.dateReportsStartDate.Location = new System.Drawing.Point(7, 39);
             this.dateReportsStartDate.Name = "dateReportsStartDate";
             this.dateReportsStartDate.Size = new System.Drawing.Size(104, 26);
-            this.dateReportsStartDate.TabIndex = 1;
+            this.dateReportsStartDate.TabIndex = 0;
+            // 
+            // dateReportsEndDate
+            // 
+            this.dateReportsEndDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateReportsEndDate.CalendarFont = new System.Drawing.Font("Arial", 12F);
+            this.dateReportsEndDate.Font = new System.Drawing.Font("Arial", 12F);
+            this.dateReportsEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateReportsEndDate.Location = new System.Drawing.Point(144, 39);
+            this.dateReportsEndDate.Name = "dateReportsEndDate";
+            this.dateReportsEndDate.Size = new System.Drawing.Size(104, 26);
+            this.dateReportsEndDate.TabIndex = 1;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Id.Width = 60;
+            // 
+            // name
+            // 
+            this.name.HeaderText = "Name";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
+            this.name.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.name.Width = 180;
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Value";
+            this.value.Name = "value";
+            this.value.ReadOnly = true;
+            this.value.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.value.Width = 60;
+            // 
+            // timestamp
+            // 
+            this.timestamp.HeaderText = "Time Stamp";
+            this.timestamp.Name = "timestamp";
+            this.timestamp.ReadOnly = true;
+            this.timestamp.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.timestamp.Width = 150;
+            // 
+            // quality
+            // 
+            this.quality.HeaderText = "Quality";
+            this.quality.Name = "quality";
+            this.quality.ReadOnly = true;
+            this.quality.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.quality.Width = 50;
             // 
             // Reports
             // 
@@ -196,12 +251,12 @@ namespace EMS_Project
             this.Controls.Add(this.btnReportsClose);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.dataReport);
+            this.Controls.Add(this.dataReportTable);
             this.Controls.Add(this.title);
             this.Name = "Reports";
             this.Text = "Reports";
             this.Load += new System.EventHandler(this.Reports_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataReport)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -213,14 +268,19 @@ namespace EMS_Project
         private System.Windows.Forms.Button btnReportsClose;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label title;
-        private System.Windows.Forms.DataGridView dataReport;
+        private System.Windows.Forms.DataGridView dataReportTable;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.DateTimePicker dateReportsStartDate;
+        private System.Windows.Forms.DateTimePicker dateReportsEndDate;
         private System.Windows.Forms.ComboBox cmbReportsFormat;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReportsFindData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quality;
     }
 }
