@@ -12,7 +12,6 @@ namespace EMS_Project
             InitializeComponent();
         }
 
-
         private void report_window(object sender, EventArgs e)
         {
             Button button = (Button)sender;

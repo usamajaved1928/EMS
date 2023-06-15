@@ -29,6 +29,7 @@ namespace EMS_Project
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainScreen));
             this.title = new System.Windows.Forms.Label();
             this.BtnDashKbaIRAC = new System.Windows.Forms.Button();
             this.btnDashKbaMachine = new System.Windows.Forms.Button();
@@ -163,6 +164,7 @@ namespace EMS_Project
             this.Controls.Add(this.btnDashKbaMachine);
             this.Controls.Add(this.BtnDashKbaIRAC);
             this.Controls.Add(this.title);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "mainScreen";
             this.Text = "Dashboard";
             this.ResumeLayout(false);

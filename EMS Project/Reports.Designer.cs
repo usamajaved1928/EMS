@@ -29,10 +29,13 @@ namespace EMS_Project
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reports));
             this.btnReportsClose = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.title = new System.Windows.Forms.Label();
-            this.dataReportTable = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnReportsFindData = new System.Windows.Forms.Button();
@@ -41,13 +44,14 @@ namespace EMS_Project
             this.label2 = new System.Windows.Forms.Label();
             this.dateReportsStartDate = new System.Windows.Forms.DateTimePicker();
             this.dateReportsEndDate = new System.Windows.Forms.DateTimePicker();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataReportTable = new System.Windows.Forms.DataGridView();
+            this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quality = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).BeginInit();
+            this.PrintDocumentReport = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewReport = new System.Windows.Forms.PrintPreviewDialog();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).BeginInit();
             this.SuspendLayout();
             // 
             // btnReportsClose
@@ -72,7 +76,7 @@ namespace EMS_Project
             this.button2.TabIndex = 1;
             this.button2.Text = "Print";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.PrintData);
+            this.button2.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // title
             // 
@@ -86,29 +90,9 @@ namespace EMS_Project
             this.title.TabIndex = 2;
             this.title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // dataReportTable
-            // 
-            this.dataReportTable.AllowUserToAddRows = false;
-            this.dataReportTable.AllowUserToDeleteRows = false;
-            this.dataReportTable.AllowUserToResizeColumns = false;
-            this.dataReportTable.AllowUserToResizeRows = false;
-            this.dataReportTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataReportTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.name,
-            this.value,
-            this.timestamp,
-            this.quality});
-            this.dataReportTable.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dataReportTable.Location = new System.Drawing.Point(0, 44);
-            this.dataReportTable.Name = "dataReportTable";
-            this.dataReportTable.ReadOnly = true;
-            this.dataReportTable.Size = new System.Drawing.Size(543, 406);
-            this.dataReportTable.TabIndex = 3;
-            // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial", 12F);
             this.label1.Location = new System.Drawing.Point(117, 45);
@@ -127,6 +111,7 @@ namespace EMS_Project
             this.panel1.Controls.Add(this.dateReportsEndDate);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel1.Location = new System.Drawing.Point(542, 44);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(255, 406);
@@ -134,7 +119,7 @@ namespace EMS_Project
             // 
             // btnReportsFindData
             // 
-            this.btnReportsFindData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReportsFindData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnReportsFindData.Font = new System.Drawing.Font("Arial", 12F);
             this.btnReportsFindData.Location = new System.Drawing.Point(7, 152);
             this.btnReportsFindData.Name = "btnReportsFindData";
@@ -191,6 +176,7 @@ namespace EMS_Project
             this.dateReportsStartDate.Name = "dateReportsStartDate";
             this.dateReportsStartDate.Size = new System.Drawing.Size(104, 26);
             this.dateReportsStartDate.TabIndex = 0;
+            this.dateReportsStartDate.ValueChanged += new System.EventHandler(this.StartDateChange);
             // 
             // dateReportsEndDate
             // 
@@ -202,63 +188,100 @@ namespace EMS_Project
             this.dateReportsEndDate.Name = "dateReportsEndDate";
             this.dateReportsEndDate.Size = new System.Drawing.Size(104, 26);
             this.dateReportsEndDate.TabIndex = 1;
+            this.dateReportsEndDate.ValueChanged += new System.EventHandler(this.EndDateChange);
             // 
-            // Id
+            // dataReportTable
             // 
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Id.Width = 60;
+            this.dataReportTable.AllowUserToAddRows = false;
+            this.dataReportTable.AllowUserToDeleteRows = false;
+            this.dataReportTable.AllowUserToResizeRows = false;
+            this.dataReportTable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 10F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataReportTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataReportTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataReportTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.timestamp,
+            this.name,
+            this.value});
+            this.dataReportTable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataReportTable.Location = new System.Drawing.Point(0, 44);
+            this.dataReportTable.MultiSelect = false;
+            this.dataReportTable.Name = "dataReportTable";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 10F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataReportTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataReportTable.RowHeadersVisible = false;
+            this.dataReportTable.RowHeadersWidth = 10;
+            this.dataReportTable.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 10F);
+            this.dataReportTable.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataReportTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataReportTable.Size = new System.Drawing.Size(542, 406);
+            this.dataReportTable.TabIndex = 6;
+            // 
+            // timestamp
+            // 
+            this.timestamp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.timestamp.HeaderText = "Time Stamp";
+            this.timestamp.Name = "timestamp";
+            this.timestamp.ReadOnly = true;
+            this.timestamp.Width = 170;
             // 
             // name
             // 
             this.name.HeaderText = "Name";
             this.name.Name = "name";
             this.name.ReadOnly = true;
-            this.name.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.name.Width = 180;
             // 
             // value
             // 
             this.value.HeaderText = "Value";
             this.value.Name = "value";
             this.value.ReadOnly = true;
-            this.value.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.value.Width = 60;
             // 
-            // timestamp
+            // PrintDocumentReport
             // 
-            this.timestamp.HeaderText = "Time Stamp";
-            this.timestamp.Name = "timestamp";
-            this.timestamp.ReadOnly = true;
-            this.timestamp.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.timestamp.Width = 150;
+            this.PrintDocumentReport.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.PrintData);
             // 
-            // quality
+            // printPreviewReport
             // 
-            this.quality.HeaderText = "Quality";
-            this.quality.Name = "quality";
-            this.quality.ReadOnly = true;
-            this.quality.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.quality.Width = 50;
+            this.printPreviewReport.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewReport.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewReport.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewReport.Document = this.PrintDocumentReport;
+            this.printPreviewReport.Enabled = true;
+            this.printPreviewReport.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewReport.Icon")));
+            this.printPreviewReport.Name = "printPreviewReport";
+            this.printPreviewReport.Visible = false;
             // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 450);
+            this.Controls.Add(this.dataReportTable);
             this.Controls.Add(this.btnReportsClose);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.dataReportTable);
             this.Controls.Add(this.title);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Reports";
             this.Text = "Reports";
             this.Load += new System.EventHandler(this.Reports_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -268,7 +291,6 @@ namespace EMS_Project
         private System.Windows.Forms.Button btnReportsClose;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label title;
-        private System.Windows.Forms.DataGridView dataReportTable;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DateTimePicker dateReportsStartDate;
@@ -277,10 +299,11 @@ namespace EMS_Project
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReportsFindData;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridView dataReportTable;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn quality;
+        private System.Drawing.Printing.PrintDocument PrintDocumentReport;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewReport;
     }
 }
