@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient
+using System.Data.SqlClient;
 using System;
 using System.Configuration;
 using System.Drawing;
@@ -11,7 +12,7 @@ namespace EMS_Project
     public partial class Reports : Form
     {
         Thread th;
-        MySqlConnection conn;
+        SqlConnection conn;
         DateTime minDate;
         DateTime maxDate;
 
@@ -27,6 +28,7 @@ namespace EMS_Project
         private int numberOfItemsPrintedSoFar;
 
         public string tableName { get; set; }
+        public string tableTag { get;  set; }
         public Reports()
         {
             InitializeComponent();
@@ -35,28 +37,44 @@ namespace EMS_Project
         private void Reports_Load(object sender, EventArgs e)
         {
             this.title.Text = $"{tableName} Report";
-            //OpenConnection();
-            //PrintDocumentReport.DefaultPageSettings.PaperSize = new System.Drawing.Printing.PaperSize("MyPaper", 840, 1180);
-            // Change the saved page size
-
+            
+            // Connection start
             string connectionString = ConfigurationManager.ConnectionStrings["database"].ConnectionString;
-            this.conn = new MySqlConnection(connectionString);
+            this.conn = new SqlConnection(connectionString);
             this.conn.Open();
             MinMax_Date();
+            try
+            {
+                this.conn = new SqlConnection(connectionString);
+                this.conn.Open();
+                MinMax_Date();
+            }
+            catch (Exception exp)
+            {
+                this.cmbReportsFormat.Enabled = false;
+                this.dateReportsEndDate.Enabled = false;
+                this.dateReportsStartDate.Enabled = false;
+                this.btnReportsFindData.Enabled = false;
+                this.btnReportsPrint.Enabled = false;
+                string message = "There is an error while connecting to the database.";
+                string title = "Database connection error";
+                MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void MinMax_Date()
         {
-            string query = $"SELECT MIN(timestamp) AS min_timestamp, MAX(timestamp) AS max_timestamp FROM `{this.tableName}`";
-            MySqlCommand cmd = new MySqlCommand(query, this.conn);
+            string query = $"SELECT MIN(_Timestamp) AS min_timestamp, MAX(_Timestamp) AS max_timestamp FROM EMS2023.dbo.Table_140 WHERE _Name = '{this.tableTag}';";
+            Console.WriteLine(query);
+            SqlCommand cmd = new SqlCommand(query, this.conn);
 
             // Execute minmax date finder query
-            using (MySqlDataReader reader = cmd.ExecuteReader())
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                while (reader.Read())
+                if (reader.Read())
                 {
-                    minDate = reader.GetDateTime("min_timestamp");
-                    maxDate = reader.GetDateTime("max_timestamp");
+                    this.minDate = (DateTime) reader.GetDateTime(0);
+                    this.maxDate = (DateTime) reader.GetDateTime(1);
                 }
             }
 
@@ -78,19 +96,27 @@ namespace EMS_Project
 
         private void GetData(object sender, EventArgs e)
         {
-            string query = String.Format(@"SELECT timestamp, name, VALUE FROM `{0}` WHERE timestamp BETWEEN '{1} 00:00:00' AND '{2} 23:59:59'
-                              AND HOUR(timestamp) % {3} = 0
-                              AND MINUTE(timestamp) = 0
-                              AND SECOND(timestamp) = 0
-                              GROUP BY DATE(timestamp), HOUR(timestamp), MINUTE(timestamp)",
-                              this.tableName,
+            string query = String.Format(@"SELECT
+                                        DATEADD(HOUR, FLOOR(DATEPART(HOUR, _Timestamp) / {3}) * {3}, CAST(CAST(_Timestamp AS DATE) AS DATETIME)) AS Timestamp,
+                                        MAX(_Value) AS Value
+                                    FROM 
+                                        EMS2023.dbo.Table_140
+                                    WHERE 
+                                        _Name = '{0}'
+                                        AND _Timestamp BETWEEN '{1} 00:00:00' AND '{2} 23:59:59'
+                                    GROUP BY 
+                                        _Name,
+                                        DATEADD(HOUR, FLOOR(DATEPART(HOUR, _Timestamp) / {3}) * {3}, CAST(CAST(_Timestamp AS DATE) AS DATETIME))
+                                    ORDER BY
+                                        Timestamp;",
+                              this.tableTag,
                               this.dateReportsStartDate.Value.ToString("yyyy-MM-dd"),
                               this.dateReportsEndDate.Value.ToString("yyyy-MM-dd"),
                               Regex.Match(this.cmbReportsFormat.SelectedItem.ToString(), @"\d+").Value);
 
-            MySqlCommand cmd = new MySqlCommand(query, this.conn);
+            SqlCommand cmd = new SqlCommand(query, this.conn);
             Console.WriteLine(cmd.CommandText);
-            using (MySqlDataReader reader = cmd.ExecuteReader())
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 this.dataReportTable.Rows.Clear();
                 while (reader.Read())
@@ -145,8 +171,7 @@ namespace EMS_Project
             // Table heading
             e.Graphics.DrawString("Sr #", FontTableHeading, brush: Brushes.Black, new Point(30, 100));
             e.Graphics.DrawString("Timestamp", FontTableHeading, brush: Brushes.Black, new Point(150, 100));
-            e.Graphics.DrawString("Name", FontTableHeading, brush: Brushes.Black, new Point(410, 100));
-            e.Graphics.DrawString("Values", FontTableHeading, brush: Brushes.Black, new Point(700, 100));
+            e.Graphics.DrawString("Values (kwh)", FontTableHeading, brush: Brushes.Black, new Point(470, 100));
             e.Graphics.DrawLine(pen: new Pen(color: Color.Black, 1), new Point(30, 130), new Point(810, 130));
 
             int rowNum = 1;
@@ -158,8 +183,7 @@ namespace EMS_Project
                     {
                         e.Graphics.DrawString((i + 1).ToString(), FontRowHeading, brush: Brushes.Black, new Point(30, 115 + (rowNum * tableRowsSpacing)));
                         e.Graphics.DrawString(this.dataReportTable.Rows[i].Cells["timestamp"].Value.ToString(), FontBody, brush: Brushes.Black, new Point(150, 115 + (rowNum * tableRowsSpacing)));
-                        e.Graphics.DrawString(this.dataReportTable.Rows[i].Cells["name"].Value.ToString(), FontBody, brush: Brushes.Black, new Point(410, 115 + (rowNum * tableRowsSpacing)));
-                        e.Graphics.DrawString(this.dataReportTable.Rows[i].Cells["value"].Value.ToString(), FontBody, brush: Brushes.Black, new Point(700, 115 + (rowNum * tableRowsSpacing)));
+                        e.Graphics.DrawString(this.dataReportTable.Rows[i].Cells["value"].Value.ToString(), FontBody, brush: Brushes.Black, new Point(470, 115 + (rowNum * tableRowsSpacing)));
                         rowNum++;
                     }
                     else

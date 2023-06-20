@@ -34,7 +34,7 @@ namespace EMS_Project
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Reports));
             this.btnReportsClose = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnReportsPrint = new System.Windows.Forms.Button();
             this.title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,11 +45,10 @@ namespace EMS_Project
             this.dateReportsStartDate = new System.Windows.Forms.DateTimePicker();
             this.dateReportsEndDate = new System.Windows.Forms.DateTimePicker();
             this.dataReportTable = new System.Windows.Forms.DataGridView();
-            this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrintDocumentReport = new System.Drawing.Printing.PrintDocument();
             this.printPreviewReport = new System.Windows.Forms.PrintPreviewDialog();
+            this.timestamp = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataReportTable)).BeginInit();
             this.SuspendLayout();
@@ -66,17 +65,17 @@ namespace EMS_Project
             this.btnReportsClose.UseVisualStyleBackColor = true;
             this.btnReportsClose.Click += new System.EventHandler(this.btnReportsClose_Click);
             // 
-            // button2
+            // btnReportsPrint
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Font = new System.Drawing.Font("Arial", 12F);
-            this.button2.Location = new System.Drawing.Point(581, 410);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(99, 28);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Print";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnPrint_Click);
+            this.btnReportsPrint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReportsPrint.Font = new System.Drawing.Font("Arial", 12F);
+            this.btnReportsPrint.Location = new System.Drawing.Point(581, 410);
+            this.btnReportsPrint.Name = "btnReportsPrint";
+            this.btnReportsPrint.Size = new System.Drawing.Size(99, 28);
+            this.btnReportsPrint.TabIndex = 1;
+            this.btnReportsPrint.Text = "Print";
+            this.btnReportsPrint.UseVisualStyleBackColor = true;
+            this.btnReportsPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // title
             // 
@@ -207,7 +206,6 @@ namespace EMS_Project
             this.dataReportTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataReportTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timestamp,
-            this.name,
             this.value});
             this.dataReportTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataReportTable.Location = new System.Drawing.Point(0, 44);
@@ -230,26 +228,6 @@ namespace EMS_Project
             this.dataReportTable.Size = new System.Drawing.Size(542, 406);
             this.dataReportTable.TabIndex = 6;
             // 
-            // timestamp
-            // 
-            this.timestamp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.timestamp.HeaderText = "Time Stamp";
-            this.timestamp.Name = "timestamp";
-            this.timestamp.ReadOnly = true;
-            this.timestamp.Width = 170;
-            // 
-            // name
-            // 
-            this.name.HeaderText = "Name";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            // 
-            // value
-            // 
-            this.value.HeaderText = "Value";
-            this.value.Name = "value";
-            this.value.ReadOnly = true;
-            // 
             // PrintDocumentReport
             // 
             this.PrintDocumentReport.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.PrintData);
@@ -265,6 +243,18 @@ namespace EMS_Project
             this.printPreviewReport.Name = "printPreviewReport";
             this.printPreviewReport.Visible = false;
             // 
+            // timestamp
+            // 
+            this.timestamp.HeaderText = "Timestamp";
+            this.timestamp.Name = "timestamp";
+            this.timestamp.ReadOnly = true;
+            // 
+            // value
+            // 
+            this.value.HeaderText = "Value";
+            this.value.Name = "value";
+            this.value.ReadOnly = true;
+            // 
             // Reports
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -272,7 +262,7 @@ namespace EMS_Project
             this.ClientSize = new System.Drawing.Size(797, 450);
             this.Controls.Add(this.dataReportTable);
             this.Controls.Add(this.btnReportsClose);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnReportsPrint);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.title);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -289,7 +279,7 @@ namespace EMS_Project
         #endregion
 
         private System.Windows.Forms.Button btnReportsClose;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnReportsPrint;
         private System.Windows.Forms.Label title;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
@@ -300,10 +290,9 @@ namespace EMS_Project
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnReportsFindData;
         private System.Windows.Forms.DataGridView dataReportTable;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn value;
         private System.Drawing.Printing.PrintDocument PrintDocumentReport;
         private System.Windows.Forms.PrintPreviewDialog printPreviewReport;
+        private System.Windows.Forms.DataGridViewTextBoxColumn timestamp;
+        private System.Windows.Forms.DataGridViewTextBoxColumn value;
     }
 }

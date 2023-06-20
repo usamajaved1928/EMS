@@ -15,17 +15,19 @@ namespace EMS_Project
         private void report_window(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            string tableName = (string)button.Tag;
-            th = new Thread(() => { openReports(tableName); });
+            string tableName = (string)button.Text;
+            string tableTag = (string)button.Tag;
+            th = new Thread(() => { openReports(tableName, tableTag); });
             th.SetApartmentState(ApartmentState.STA);
             th.Start();
             this.Close();
         }
 
-        private void openReports(string tableName)
+        private void openReports(string tableName, string tableTag)
         {
             Reports reportForm = new Reports();
             reportForm.tableName = tableName;
+            reportForm.tableTag = tableTag;
             Application.Run(reportForm);
         }
     }
